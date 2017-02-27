@@ -14,9 +14,23 @@ const (
 	facebookInfoEndpoint = `https://graph.facebook.com/me?fields=name,email`
 )
 
+/* Google+ json response:
+ "id": "101533333333444444444",
+ "email": "zzz@gmail.com",
+ "verified_email": true,
+ "name": "Ron Paul",
+ "given_name": "Ron",
+ "family_name": "Paul",
+ "link": "https://plus.google.com/111111111111111111111",
+ "picture": "https://lh4.googleusercontent.com/-Bdfdsfdsf/AAAAAAAAAAI/AAAAAAAAAvc/sdsadsadVw/photo.jpg",
+ "gender": "male",
+ "locale": "en"
+
+*/
 type googleMeResponse struct {
 	ID    string `json:"id"`
 	Email string `json:"email"`
+	Name string `json:"name"`
 }
 
 // testing
@@ -37,9 +51,15 @@ func Google(ctx context.Context, cfg oauth2.Config, token *oauth2.Token) (authbo
 		return nil, err
 	}
 
+	displayName := jsonResp.Name
+	if displayName == "" {
+		displayName = jsonResp.Email
+	}
+
 	return authboss.Attributes{
 		authboss.StoreOAuth2UID: jsonResp.ID,
 		authboss.StoreEmail:     jsonResp.Email,
+		authboss.StoreDisplayName: displayName,
 	}, nil
 }
 

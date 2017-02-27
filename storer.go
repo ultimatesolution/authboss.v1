@@ -19,6 +19,7 @@ const (
 	StoreEmail    = "email"
 	StoreUsername = "username"
 	StorePassword = "password"
+	StoreDisplayName     = "displayname"
 )
 
 // Data store constants for OAuth2 attribute names.

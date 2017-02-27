@@ -9,7 +9,7 @@ import (
 
 	"golang.org/x/net/context"
 	"golang.org/x/oauth2"
-	"gopkg.in/authboss.v1"
+	"github.com/ultimatesolution/authboss.v1"
 )
 
 func TestGoogle(t *testing.T) {
